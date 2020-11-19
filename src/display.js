@@ -44,25 +44,15 @@ const Display = (() => {
         let chevron = _sidebarHeader.querySelector('i');
 
         items.forEach(item => {
-            if (item.classList.contains('expanded')) {
-                item.classList.remove('expanded');
-                chevron.classList.remove('rotate');
-            } else {
-                item.classList.add('expanded');
-                chevron.classList.add('rotate');
-            }
+            item.classList.toggle('expanded');
         });
+        chevron.classList.toggle('rotate');
     };
 
     const toggleAddProjectInput = (e) => {
-        if (getComputedStyle(_addProjectInput).display === 'none') {
-            _addProjectInput.style.display = 'block';
-            _addProjectText.style.display = 'none';
+        _addProjectText.classList.toggle('hide')
+        if (_addProjectInput.classList.toggle('show')) {
             _addProjectInput.focus();
-
-        } else {
-            _addProjectInput.style.display = 'none';
-            _addProjectText.style.display = 'block';
         }
     };
 
