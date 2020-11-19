@@ -1,0 +1,157 @@
+:root {
+    --highlight-color: #DB4C3F;
+    --contrast-color: #dadada;
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#wrapper {
+    display: grid;
+    grid-template-columns: 175px 1fr 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas: 
+    'navbar navbar navbar'
+    'sidebar project todo';
+    height: 100vh;
+}
+
+#navbar {
+    display: flex;
+    align-items: center;
+    grid-area: navbar;
+    background-color: var(--highlight-color);
+}
+
+#navbar h2 {
+    color: white;
+    margin: 0;
+    margin-left: 1em;
+    font-weight: 600;
+}
+
+#sidebar {
+    grid-area: sidebar;
+    background-color: var(--contrast-color);
+    padding: 1em;
+}
+
+#sidebar ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+#sidebar ul ul {
+    padding: 0.25em 1em;
+}
+
+.sidebar-header {
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.sidebar-header i {
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-header i.rotate {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-item {
+    font-size: 0.9em;
+    font-weight: 400;
+    margin: 0.25em 0;
+
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s ease-in-out;
+}
+
+.sidebar-item.expanded {
+    height: 1.5em;
+    text-overflow: clip;
+}
+
+.sidebar-item:hover {
+    color: var(--highlight-color);
+}
+
+#add-project-text {
+    color: grey;
+}
+
+#add-project-text:hover {
+    color: var(--highlight-color);
+}
+
+#add-project-input[type='text'] {
+    display: none;
+    background-color: var(--contrast-color);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    border: none;
+    padding: 0;
+    outline: none;
+}
+
+#project-view {
+    grid-area: project;
+}
+
+#todo-view {
+    grid-area: todo;
+    overflow: hidden;
+    padding: 0;
+}
+
+#todo-section-container {
+    width: 100%;
+    position: relative;
+    left: 100%;
+    transition: left 0.5s;
+}
+
+#todo-section-container .visible {
+    left: 0%;
+    transition: left 0.5s;
+}
+
+#project-view, #todo-view {
+    padding: 1em 0 1em 2em;
+}
+
+.project-title {
+    font-weight: 600;
+}
+
+.todo {
+    width: 200px;
+    height: 75px;
+    box-shadow: 0px 0px 2px grey;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    cursor: pointer;
+    margin: 0 0 1em 0;
+}
+
+.todo:hover {
+    box-shadow: 0px 0px 5px grey;
+}
+
+.todo-title {
+    font-weight: 400;
+}
+
+.todo-header {
+    font-weight: 400;
+}
+
+.todo-section p {
+    font-weight: 300;
+}
