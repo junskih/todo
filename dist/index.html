@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo</title>
+        <link href='../src/styles.css' rel='stylesheet'></link>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div id='wrapper'>
+            <div id='navbar'>
+                <h2>Not Todoist</h2>
+            </div>
+
+            <div id='sidebar'>
+                <ul>
+                    <li class='sidebar-header'>
+                        <i class='fas fa-chevron-right rotate'></i> Projects
+                        <ul>
+                            <li class='sidebar-item expanded'>
+                                <span id='add-project-text'><i class="fas fa-plus"></i> Add project</span>
+                                <input id='add-project-input' type='text' placeholder='Project name'>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <template id="sidebar-item-template">
+                    <li class='sidebar-item expanded'></li>
+                </template>
+            </div>
+
+            <div id='project-view'>
+                <h2 class='project-title'></h2>
+
+                <div id='todo-container'></div>
+                <template id='todo-template'>
+                    <div class='todo'>
+                        <i class='far fa-check-circle'></i>
+                    </div>
+                </template>
+            </div>
+
+            <div id='todo-view'>
+                <div id='todo-section-container'>
+                    <h2 class='todo-title'>Todo title</h2>
+
+                    <div class='todo-section'>
+                        <h4 class='todo-header'>Description</h4>
+                        <p>This is a description</p>
+                    </div>
+
+                    <div class='todo-section'>
+                        <h4 class='todo-header'>Due date</h4>
+                        <p>Date picker here</p>
+                    </div>
+
+                    <div class='todo-section'>
+                        <h4 class='todo-header'>Priority</h4>
+                        <p>Priority scale here</p>
+                    </div>
+
+                    <div class='todo-section'>
+                        <h4 class='todo-header'>Comments</h4>
+                        <p>No comments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='main.js'></script>
+    </body>
+</html>
