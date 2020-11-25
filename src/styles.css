@@ -13,56 +13,56 @@ body {
     grid-template-columns: 175px 1fr 1fr;
     grid-template-rows: 60px 1fr;
     grid-template-areas: 
-    'navbar navbar navbar'
-    'sidebar project todo';
+    'header header header'
+    'nav project task';
     height: 100vh;
 }
 
-#navbar {
+header {
     display: flex;
     align-items: center;
-    grid-area: navbar;
+    grid-area: header;
     background-color: var(--highlight-color);
 }
 
-#navbar h2 {
+header h2 {
     color: white;
     margin: 0;
     margin-left: 1em;
     font-weight: 600;
 }
 
-#sidebar {
-    grid-area: sidebar;
+nav {
+    grid-area: nav;
     background-color: var(--contrast-color);
     padding: 1em;
 }
 
-#sidebar ul {
+nav ul {
     padding: 0;
     list-style-type: none;
 }
 
-#sidebar ul ul {
+nav ul ul {
     padding: 0.25em 1em;
 }
 
-.sidebar-header {
+.nav-header {
     font-weight: 600;
     font-size: 1em;
     cursor: pointer;
 }
 
-.sidebar-header i {
+.nav-header i {
     transition: transform 0.3s ease-in-out;
 }
 
-.sidebar-header i.rotate {
+.nav-header i.rotate {
     transform: rotate(90deg);
     transition: transform 0.3s ease-in-out;
 }
 
-.sidebar-item {
+.nav-item {
     font-size: 0.9em;
     font-weight: 400;
     margin: 0.25em 0;
@@ -72,12 +72,12 @@ body {
     transition: height 0.3s ease-in-out;
 }
 
-.sidebar-item.expanded {
+.nav-item.expanded {
     height: 1.5em;
     text-overflow: clip;
 }
 
-.sidebar-item:hover {
+.nav-item:hover {
     color: var(--highlight-color);
 }
 
@@ -112,25 +112,25 @@ body {
     grid-area: project;
 }
 
-#todo-view {
-    grid-area: todo;
+#task-view {
+    grid-area: task;
     overflow: hidden;
     padding: 0;
 }
 
-#todo-section-container {
+#task-section-container {
     width: 100%;
     position: relative;
     left: 100%;
     transition: left 0.5s;
 }
 
-#todo-section-container .visible {
+#task-section-container .visible {
     left: 0%;
     transition: left 0.5s;
 }
 
-#project-view, #todo-view {
+#project-view, #task-view {
     padding: 1em 0 1em 2em;
 }
 
@@ -138,7 +138,7 @@ body {
     font-weight: 600;
 }
 
-.todo {
+.task {
     width: 200px;
     height: 75px;
     box-shadow: 0px 0px 2px grey;
@@ -148,18 +148,18 @@ body {
     margin: 0 0 1em 0;
 }
 
-.todo:hover {
+.task:hover {
     box-shadow: 0px 0px 5px grey;
 }
 
-.todo-title {
+.task-title {
     font-weight: 400;
 }
 
-.todo-header {
+.task-header {
     font-weight: 400;
 }
 
-.todo-section p {
+.task-section p {
     font-weight: 300;
 }

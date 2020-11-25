@@ -9,16 +9,16 @@
 
     <body>
         <div id='wrapper'>
-            <div id='navbar'>
+            <header>
                 <h2>Not Todoist</h2>
-            </div>
+            </header>
 
-            <div id='sidebar'>
+            <nav>
                 <ul>
-                    <li class='sidebar-header'>
+                    <li class='nav-header'>
                         <i class='fas fa-chevron-right rotate'></i> Projects
                         <ul>
-                            <li class='sidebar-item expanded'>
+                            <li class='nav-item expanded'>
                                 <span id='add-project-text'><i class="fas fa-plus"></i> Add project</span>
                                 <input id='add-project-input' type='text' placeholder='Project name'>
                             </li>
@@ -26,47 +26,53 @@
                     </li>
                 </ul>
 
-                <template id="sidebar-item-template">
-                    <li class='sidebar-item expanded'></li>
+                <template id="nav-item-template">
+                    <li class='nav-item expanded'></li>
                 </template>
-            </div>
+            </nav>
 
-            <div id='project-view'>
+            <section id='project-view'>
                 <h2 class='project-title'></h2>
 
-                <div id='todo-container'></div>
-                <template id='todo-template'>
-                    <div class='todo'>
+                <ul id='task-container'>
+                    <li>
+                        <span id='add-task-text'><i class="fas fa-plus"></i> Add project</span>
+                        <input id='add-task-input' type='text' placeholder='Project name'>
+                    </li>
+                </ul>
+
+                <template id='task-template'>
+                    <li class='task'>
                         <i class='far fa-check-circle'></i>
-                    </div>
+                    </li>
                 </template>
-            </div>
+            </section>
 
-            <div id='todo-view'>
-                <div id='todo-section-container'>
-                    <h2 class='todo-title'>Todo title</h2>
+            <section id='task-view'>
+                <div id='task-section-container'>
+                    <h2 class='task-title'>Task title</h2>
 
-                    <div class='todo-section'>
-                        <h4 class='todo-header'>Description</h4>
+                    <div class='task-section'>
+                        <h4 class='task-header'>Description</h4>
                         <p>This is a description</p>
                     </div>
 
-                    <div class='todo-section'>
-                        <h4 class='todo-header'>Due date</h4>
+                    <div class='task-section'>
+                        <h4 class='task-header'>Due date</h4>
                         <p>Date picker here</p>
                     </div>
 
-                    <div class='todo-section'>
-                        <h4 class='todo-header'>Priority</h4>
+                    <div class='task-section'>
+                        <h4 class='task-header'>Priority</h4>
                         <p>Priority scale here</p>
                     </div>
 
-                    <div class='todo-section'>
-                        <h4 class='todo-header'>Comments</h4>
+                    <div class='task-section'>
+                        <h4 class='task-header'>Comments</h4>
                         <p>No comments.</p>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
         <script src='main.js'></script>
     </body>
