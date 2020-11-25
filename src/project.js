@@ -1,21 +1,29 @@
 const Project = (title) => {
     let _title = title;
-    let _todos = [];
+    let _tasks = [];
     
     const getTitle = () => _title;
     const setTitle = (title) => _title = title;
 
-    const getTodos = () => _todos;
-    const addTodo = (todo) => _todos.push(todo);
+    const getTasks = () => _tasks;
+    const addTask = (task) => _tasks.push(task);
+    const removeTask = (index) => _tasks.splice(index, 1);
 
-    const removeTodo = (index) => _todos.splice(index, 1);
+    // Information to be stored in localStorage
+    const toJSON = () => {
+        return {
+            title: _title,
+            tasks: _tasks
+        }
+    };
 
     return {
         getTitle,
         setTitle,
-        getTodos,
-        addTodo,
-        removeTodo
+        getTasks,
+        addTask,
+        removeTask,
+        toJSON
     };
 };
 

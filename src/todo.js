@@ -1,4 +1,4 @@
-const Todo = ({title, desc, dueDate, priority}) => {
+const Task = ({title, desc, dueDate, priority}) => {
     let _title = title;
     let _desc = desc;
     let _dueDate = dueDate;
@@ -16,6 +16,16 @@ const Todo = ({title, desc, dueDate, priority}) => {
     const getPriority = () => _priority;
     const setPriority = (priority) => _priority = priority;
 
+    // Information to be stored in localStorage
+    const toJSON = () => {
+        return {
+            title: _title,
+            desc: _desc,
+            dueDate: _dueDate,
+            priority: _priority
+        }
+    };
+
     return {
         getTitle,
         setTitle,
@@ -24,8 +34,9 @@ const Todo = ({title, desc, dueDate, priority}) => {
         getDueDate,
         setDueDate,
         getPriority,
-        setPriority
+        setPriority,
+        toJSON
     }
 };
 
-export default Todo;
+export default Task;
