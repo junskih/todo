@@ -22,6 +22,11 @@ const Storage = (() => {
         return _projects.filter(project => project.getTitle() === title)[0];
     };
 
+    const addTaskToProject = (taskTitle, projectTitle) => {
+        let project = _projects.find(project => projectTitle === project.getTitle());
+        
+    };
+
     const saveToLocalStorage = () => {
         localStorage.setItem(_storageItemName, JSON.stringify(_projects));
     };
@@ -43,7 +48,8 @@ const Storage = (() => {
     return {
         addProject,
         getProjects,
-        getProject
+        getProject,
+        addTaskToProject
     };
 })();
 

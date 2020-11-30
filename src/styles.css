@@ -81,6 +81,27 @@ nav ul ul {
     color: var(--highlight-color);
 }
 
+.label-toggle:hover {
+    cursor: pointer;
+    color: var(--highlight-color);
+}
+
+.label-toggle.hide {
+    display: none;
+}
+
+.input-toggle[type='text'] {
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    border: none;
+    padding: 0;
+    outline: none;
+}
+
+.input-toggle[type='text'].show {
+    display: block;
+}
+
 #add-project-text {
     color: grey;
 }
@@ -89,27 +110,24 @@ nav ul ul {
     color: var(--highlight-color);
 }
 
-#add-project-text.hide {
-    display: none;
-}
-
-#add-project-input[type='text'] {
-    display: none;
+#add-project-input {
     background-color: var(--contrast-color);
-    font-family: 'Open Sans', sans-serif;
     font-size: 1em;
     font-weight: 400;
-    border: none;
-    padding: 0;
-    outline: none;
 }
 
-#add-project-input[type='text'].show {
-    display: block;
+#add-task-input {
+    font-size: 1em;
+    font-weight: 400;
 }
 
 #project-view {
     grid-area: project;
+}
+
+#task-list {
+    list-style-type: none;
+    padding: 0;
 }
 
 #task-view {

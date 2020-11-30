@@ -19,8 +19,8 @@
                         <i class='fas fa-chevron-right rotate'></i> Projects
                         <ul>
                             <li class='nav-item expanded'>
-                                <span id='add-project-text'><i class="fas fa-plus"></i> Add project</span>
-                                <input id='add-project-input' type='text' placeholder='Project name'>
+                                <label id='add-project-text' class='label-toggle'><i class="fas fa-plus"></i> Add project</label>
+                                <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name'>
                             </li>
                         </ul>
                     </li>
@@ -34,10 +34,10 @@
             <section id='project-view'>
                 <h2 class='project-title'></h2>
 
-                <ul id='task-container'>
-                    <li>
-                        <span id='add-task-text'><i class="fas fa-plus"></i> Add project</span>
-                        <input id='add-task-input' type='text' placeholder='Project name'>
+                <ul id='task-list'>
+                    <li id='add-task-item'>
+                        <label id='add-task-label' class='label-toggle'><i class="fas fa-plus"></i> Add task</label>
+                        <input id='add-task-input' class='input-toggle' type='text' placeholder='Task name'>
                     </li>
                 </ul>
 
