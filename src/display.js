@@ -5,7 +5,7 @@ const Display = (() => {
     const _projectView = document.querySelector('#project-view');
     const _labelToggles = document.querySelectorAll('.label-toggle');
     const _inputToggles = document.querySelectorAll('.input-toggle');
-    const _taskContainer = document.querySelector('#task-list');
+    const _taskList = document.querySelector('#task-list');
 
     const init = () => {
         _labelToggles.forEach(labelToggle => {
@@ -75,15 +75,11 @@ const Display = (() => {
         if (classes.contains('label-toggle')) {
             classes.toggle('hide');
             let input = target.nextElementSibling;
-
-            if (input.classList.toggle('show')) {
-                input.focus();
-            }
+            if (input.classList.toggle('show')) input.focus();
         }
 
         if (classes.contains('input-toggle')) {
             classes.toggle('show');
-
             let label = target.previousElementSibling;
             label.classList.toggle('hide');
         }
@@ -104,20 +100,15 @@ const Display = (() => {
         if (!project) return;
         
         // Empty task list
-        while (_taskContainer.hasChildNodes() && _taskContainer.firstChild.id !== 'add-task-item') {
-            _taskContainer.firstChild.remove();
+        while (_taskList.hasChildNodes() && _taskList.firstChild.id !== 'add-task-item') {
+            _taskList.firstChild.remove();
         }
         
         let projectTitle = _projectView.querySelector('.project-title');
         projectTitle.textContent = project.getTitle();
         
         let tasks = project.getTasks();
-
-        if (tasks) {
-            tasks.forEach(task => {
-                addToTaskList(task);
-            });
-        }
+        if (tasks) tasks.forEach(task => addToTaskList(task));
     };
 
     const createTask = (e) => {
@@ -126,7 +117,7 @@ const Display = (() => {
 
         let projectTitle = _projectView.querySelector('.project-title').textContent;
         let task = Storage.addTaskToProject(taskTitle, projectTitle);
-        //addToTaskList(task);
+        addToTaskList(task);
     };
 
     const addToTaskList = (task) => {
@@ -136,7 +127,7 @@ const Display = (() => {
         clone.insertAdjacentHTML('beforeEnd', task.getTitle());
         clone.classList.add('task');
         clone.addEventListener('click', showTask);
-        _taskContainer.appendChild(clone);
+        _taskList.insertBefore(clone, _taskList.lastElementChild);
     };
     
     const showTask = (e) => {

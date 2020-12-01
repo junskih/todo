@@ -1,4 +1,5 @@
 import Project from '../src/project';
+import Task from '../src/task';
 
 const Storage = (() => {
     let _storageItemName = 'projects';
@@ -19,12 +20,20 @@ const Storage = (() => {
     };
 
     const getProject = (title) => {
-        return _projects.filter(project => project.getTitle() === title)[0];
+        return _projects.find(project => project.getTitle() === title);
+    };
+
+    const removeProject = (index) => {
+        _projects.splice(index, 1);
     };
 
     const addTaskToProject = (taskTitle, projectTitle) => {
         let project = _projects.find(project => projectTitle === project.getTitle());
-        
+        let task = Task(taskTitle);
+        project.addTask(task);
+
+        saveToLocalStorage();
+        return task;
     };
 
     const saveToLocalStorage = () => {
@@ -36,7 +45,13 @@ const Storage = (() => {
         
         // Construct objects from stored data
         projects.forEach(project => {
-            _projects.push(Project(project.title));
+            let newProject = Project(project.title);
+            _projects.push(newProject);
+
+            project.tasks.forEach(task => {
+                let newTask = Task(task.title);
+                newProject.addTask(newTask);
+            });
         });
 
         /*
@@ -49,6 +64,7 @@ const Storage = (() => {
         addProject,
         getProjects,
         getProject,
+        removeProject,
         addTaskToProject
     };
 })();

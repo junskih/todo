@@ -1,8 +1,9 @@
-const Task = ({title, desc, dueDate, priority}) => {
+const Task = (title, desc='This is a task', dueDate='Now', priority='High', done=false) => {
     let _title = title;
     let _desc = desc;
     let _dueDate = dueDate;
     let _priority = priority;
+    let _done = done;
 
     const getTitle = () => _title;
     const setTitle = (title) => _title = title;
@@ -15,6 +16,9 @@ const Task = ({title, desc, dueDate, priority}) => {
 
     const getPriority = () => _priority;
     const setPriority = (priority) => _priority = priority;
+
+    const isDone = () => _done;
+    const setDone = (done) => _done = done;
 
     // Information to be stored in localStorage
     const toJSON = () => {
@@ -35,6 +39,8 @@ const Task = ({title, desc, dueDate, priority}) => {
         setDueDate,
         getPriority,
         setPriority,
+        isDone,
+        setDone,
         toJSON
     }
 };
