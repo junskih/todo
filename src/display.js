@@ -6,8 +6,10 @@ const Display = (() => {
     const _labelToggles = document.querySelectorAll('.label-toggle');
     const _inputToggles = document.querySelectorAll('.input-toggle');
     const _taskList = document.querySelector('#task-list');
+    const _projectTitle = _projectView.querySelector('#project-title');
 
     const init = () => {
+        // Add event listeners for 
         _labelToggles.forEach(labelToggle => {
             labelToggle.addEventListener('click', toggleLabelInput);
         });
@@ -30,13 +32,12 @@ const Display = (() => {
                     break;
             }
         });
-
+        _navHeader.addEventListener('click', toggleProjectList);
         populateProjectList();
     };
 
     const populateProjectList = () => {
         let projects = Storage.getProjects();
-        _navHeader.addEventListener('click', toggleProjectList);
         if (!projects) return;
         projects.forEach(project => {
             addToProjectList(project);
@@ -49,11 +50,13 @@ const Display = (() => {
 
         let clone = navItemTemplate.content.cloneNode(true);
         let item = clone.querySelector('li');
+        let trash = clone.querySelector('i');
 
-        item.textContent = project.getTitle();
-        projectList.insertBefore(item, projectList.lastElementChild);
+        item.insertAdjacentHTML('afterbegin', project.getTitle());
+        projectList.insertBefore(clone, projectList.lastElementChild);
 
         item.addEventListener('click', showProject);
+        trash.addEventListener('click', removeProject);
     }
 
     const toggleProjectList = (e) => {
@@ -94,28 +97,37 @@ const Display = (() => {
     };
 
     const showProject = (e) => {
-        if (!e?.target?.textContent) return;
+        let title = e.target.innerText;
+        if (!title) return;
 
-        let project = Storage.getProject(e.target.textContent);
+        let project = Storage.getProject(title);
         if (!project) return;
         
         // Empty task list
         while (_taskList.hasChildNodes() && _taskList.firstChild.id !== 'add-task-item') {
             _taskList.firstChild.remove();
         }
-        
-        let projectTitle = _projectView.querySelector('.project-title');
-        projectTitle.textContent = project.getTitle();
+
+        _projectTitle.innerText = project.getTitle();
         
         let tasks = project.getTasks();
         if (tasks) tasks.forEach(task => addToTaskList(task));
+    };
+
+    const removeProject = (e) => {
+        // Add confirmation dialog!
+        if (e.target.classList.contains('fa-trash-alt')) {
+            let title = e.target.closest('li').innerText;
+            let deleted = Storage.removeProject(title);
+            if (deleted) e.target.parentNode.remove();
+        }
     };
 
     const createTask = (e) => {
         let taskTitle = e.target.value;
         if (taskTitle.trim() === '') return;
 
-        let projectTitle = _projectView.querySelector('.project-title').textContent;
+        let projectTitle = _projectTitle.innerText;
         let task = Storage.addTaskToProject(taskTitle, projectTitle);
         addToTaskList(task);
     };
@@ -123,15 +135,29 @@ const Display = (() => {
     const addToTaskList = (task) => {
         const taskTemplate = document.querySelector('#task-template');
         let clone = taskTemplate.content.firstElementChild.cloneNode(true);
-
-        clone.insertAdjacentHTML('beforeEnd', task.getTitle());
-        clone.classList.add('task');
-        clone.addEventListener('click', showTask);
+        let trash = clone.querySelector('.fa-trash-alt');
+        
+        trash.insertAdjacentHTML('beforeBegin', task.getTitle());
         _taskList.insertBefore(clone, _taskList.lastElementChild);
+
+        clone.addEventListener('click', showTask);
+        trash.addEventListener('click', removeTask);
     };
     
     const showTask = (e) => {
-        console.log(e?.target);
+        if (e.target.classList.contains('task')) {
+            console.log(`showtask: ${e.target}`);
+        }
+    };
+
+    const removeTask = (e) => {
+        if (e.target.classList.contains('fa-trash-alt')) {
+            let task = e.target.closest('li');
+            let taskTitle = task.innerText;
+            let projectTitle = _projectTitle.innerText;
+            let deleted = Storage.removeTaskFromProject(taskTitle, projectTitle);
+            if (deleted) task.remove();
+        }
     };
 
     return {

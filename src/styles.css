@@ -63,6 +63,9 @@ nav ul ul {
 }
 
 .nav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 0.9em;
     font-weight: 400;
     margin: 0.25em 0;
@@ -78,6 +81,20 @@ nav ul ul {
 }
 
 .nav-item:hover {
+    color: var(--highlight-color);
+}
+
+.nav-item i.fa-trash-alt {
+    visibility: hidden;
+    font-size: 0.8em;
+}
+
+.nav-item:hover > i {
+    visibility: visible;
+    color: black;
+}
+
+.nav-item > i:hover {
     color: var(--highlight-color);
 }
 
@@ -152,11 +169,13 @@ nav ul ul {
     padding: 1em 0 1em 2em;
 }
 
-.project-title {
+#project-title {
     font-weight: 600;
 }
 
 .task {
+    display: flex;
+    justify-content: space-between;
     width: 200px;
     height: 75px;
     box-shadow: 0px 0px 2px grey;
@@ -168,6 +187,18 @@ nav ul ul {
 
 .task:hover {
     box-shadow: 0px 0px 5px grey;
+}
+
+.task > .fa-trash-alt {
+    align-self: flex-end;
+}
+
+.task:hover > .fa-trash-alt {
+    visibility: visible;
+}
+
+.task > i:hover {
+    color: var(--highlight-color);
 }
 
 .task-title {

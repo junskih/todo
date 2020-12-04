@@ -23,17 +23,30 @@ const Storage = (() => {
         return _projects.find(project => project.getTitle() === title);
     };
 
-    const removeProject = (index) => {
+    const removeProject = (title) => {
+        let index = _projects.indexOf(_projects.find(project => project.getTitle() === title));
+        if (index === undefined) return false;
         _projects.splice(index, 1);
+        saveToLocalStorage();
+        return true;
+        // use .filter?
     };
 
     const addTaskToProject = (taskTitle, projectTitle) => {
         let project = _projects.find(project => projectTitle === project.getTitle());
         let task = Task(taskTitle);
         project.addTask(task);
-
         saveToLocalStorage();
         return task;
+    };
+
+    const removeTaskFromProject = (taskTitle, projectTitle) => {
+        let project = _projects.find(project => projectTitle === project.getTitle());
+        let tasks = project.getTasks();
+        let index = tasks.indexOf(tasks.find(task => taskTitle === task.getTitle()));
+        tasks.splice(index, 1);
+        saveToLocalStorage();
+        return true;
     };
 
     const saveToLocalStorage = () => {
@@ -65,7 +78,8 @@ const Storage = (() => {
         getProjects,
         getProject,
         removeProject,
-        addTaskToProject
+        addTaskToProject,
+        removeTaskFromProject
     };
 })();
 
