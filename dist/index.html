@@ -14,11 +14,11 @@
             </header>
 
             <nav>
-                <ul>
+                <ul id='nav-list'>
                     <li class='nav-header'>
-                        <i class='fas fa-chevron-right rotate'></i> Projects
-                        <ul>
-                            <li class='nav-item expanded'>
+                        <i class='fas fa-chevron-right nav-chevron nav-chevron--rotate'></i> Projects
+                        <ul id='project-list'>
+                            <li class='nav-item nav-item--expanded'>
                                 <label id='add-project-text' class='label-toggle'><i class="fas fa-plus"></i> Add project</label>
                                 <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name'>
                             </li>
@@ -27,7 +27,7 @@
                 </ul>
 
                 <template id='nav-item-template'>
-                    <li class='nav-item expanded'>
+                    <li class='nav-item nav-item--expanded'>
                         <i class="far fa-trash-alt"></i>
                     </li>
                 </template>
@@ -46,36 +46,48 @@
                 <template id='task-template'>
                     <li class='task'>
                         <i class='far fa-check-circle'></i>
+                        <input type='checkbox'>
                         <i class="far fa-trash-alt"></i>
                     </li>
                 </template>
             </section>
 
-            <section id='task-view'>
-                <div id='task-section-container'>
-                    <h2 class='task-title'>Task title</h2>
+            <form class='task-form'>
+                <div>
+                    <input class='task-done' type='checkbox'>
+                    <h2 class='task-title' contenteditable='true'>Task title
+                        <i class="fas fa-pen"></i>
+                    </h2>
 
-                    <div class='task-section'>
-                        <h4 class='task-header'>Description</h4>
-                        <p>This is a description</p>
-                    </div>
+                    <p class='task-desc'>This is the task description.</p>
 
-                    <div class='task-section'>
-                        <h4 class='task-header'>Due date</h4>
-                        <p>Date picker here</p>
-                    </div>
+                    <input class='task-date' type='date'>
 
-                    <div class='task-section'>
-                        <h4 class='task-header'>Priority</h4>
-                        <p>Priority scale here</p>
-                    </div>
+                    <p>Priority</p>
+                    <ul class='task-priority-list'>
+                        <li class='task-priority-item'>
+                            <label for='priority-low'>Low</label>
+                            <input id='priority-low' type='radio' name='priority'>
+                        </li>
+                        
+                        <li class='task-priority-item'>
+                            <label for='priority-normal'>Normal</label>
+                            <input id='priority-normal' type='radio' name='priority'>
+                        </li>
 
-                    <div class='task-section'>
-                        <h4 class='task-header'>Comments</h4>
-                        <p>No comments.</p>
-                    </div>
+                        <li class='task-priority-item'>
+                            <label for='priority-high'>High</label>
+                            <input id='priority-high' type='radio' name='priority'>
+                        </li>
+                        
+                    </ul>
                 </div>
-            </section>
+
+                <div class='task-form-button-container'>
+                    <button class='task-form-button submit-button'>Save</button>
+                    <button class='task-form-button cancel-button'>Cancel</button>
+                </div>
+            </form>
         </div>
         <script src='main.js'></script>
     </body>

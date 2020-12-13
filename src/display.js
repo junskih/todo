@@ -1,15 +1,17 @@
 import Storage from '../src/storage';
 
 const Display = (() => {
+    const _wrapper = document.querySelector('#wrapper');
     const _navHeader = document.querySelector('.nav-header');
     const _projectView = document.querySelector('#project-view');
     const _labelToggles = document.querySelectorAll('.label-toggle');
     const _inputToggles = document.querySelectorAll('.input-toggle');
     const _taskList = document.querySelector('#task-list');
     const _projectTitle = _projectView.querySelector('#project-title');
+    const _taskForm = document.querySelector('.task-form');
+    const _taskFormCancelButton = _taskForm.querySelector('.cancel-button');
 
     const init = () => {
-        // Add event listeners for 
         _labelToggles.forEach(labelToggle => {
             labelToggle.addEventListener('click', toggleLabelInput);
         });
@@ -33,6 +35,7 @@ const Display = (() => {
             }
         });
         _navHeader.addEventListener('click', toggleProjectList);
+        _taskFormCancelButton.addEventListener('click', toggleTaskForm);
         populateProjectList();
     };
 
@@ -66,9 +69,9 @@ const Display = (() => {
         let chevron = _navHeader.querySelector('i');
 
         items.forEach(item => {
-            item.classList.toggle('expanded');
+            item.classList.toggle('nav-item--expanded');
         });
-        chevron.classList.toggle('rotate');
+        chevron.classList.toggle('nav-chevron--rotate');
     };
 
     const toggleLabelInput = (e) => {
@@ -76,15 +79,16 @@ const Display = (() => {
         let classes = target.classList;
 
         if (classes.contains('label-toggle')) {
-            classes.toggle('hide');
+            classes.toggle('label-toggle--hidden');
             let input = target.nextElementSibling;
-            if (input.classList.toggle('show')) input.focus();
+            if (input.classList.toggle('input-toggle--shown')) input.focus();
         }
 
         if (classes.contains('input-toggle')) {
-            classes.toggle('show');
+            classes.toggle('input-toggle--shown');
             let label = target.previousElementSibling;
-            label.classList.toggle('hide');
+            label.classList.toggle('label-toggle--hidden');
+            target.value = '';
         }
     };
 
@@ -93,7 +97,9 @@ const Display = (() => {
         if (title.trim() === '') return;
 
         let project = Storage.addProject(title);
-        addToProjectList(project);
+        if (project) addToProjectList(project);
+        e.target.value = '';
+        e.target.blur();
     };
 
     const showProject = (e) => {
@@ -122,6 +128,10 @@ const Display = (() => {
             if (deleted) e.target.parentNode.remove();
         }
     };
+    
+    const toggleAddTask = () => {
+
+    };
 
     const createTask = (e) => {
         let taskTitle = e.target.value;
@@ -129,7 +139,9 @@ const Display = (() => {
 
         let projectTitle = _projectTitle.innerText;
         let task = Storage.addTaskToProject(taskTitle, projectTitle);
-        addToTaskList(task);
+        if (task) addToTaskList(task);
+        e.target.value = '';
+        e.target.blur();
     };
 
     const addToTaskList = (task) => {
@@ -140,14 +152,8 @@ const Display = (() => {
         trash.insertAdjacentHTML('beforeBegin', task.getTitle());
         _taskList.insertBefore(clone, _taskList.lastElementChild);
 
-        clone.addEventListener('click', showTask);
+        clone.addEventListener('click', toggleTaskForm);
         trash.addEventListener('click', removeTask);
-    };
-    
-    const showTask = (e) => {
-        if (e.target.classList.contains('task')) {
-            console.log(`showtask: ${e.target}`);
-        }
     };
 
     const removeTask = (e) => {
@@ -158,6 +164,38 @@ const Display = (() => {
             let deleted = Storage.removeTaskFromProject(taskTitle, projectTitle);
             if (deleted) task.remove();
         }
+    };
+    
+    const toggleTaskForm = (e) => {
+        e.preventDefault();
+
+        let classes = e.target.classList;
+        if (classes.contains('task') || classes.contains('cancel-button')) {
+            _taskForm.classList.toggle('task-form--visible');
+            _wrapper.classList.toggle('wrapper--blurred');
+            
+            if (classes.contains('task')) {
+                let projectTitle = _projectTitle.innerText;
+                let taskTitle = e.target.innerText;
+                let project = Storage.getProject(projectTitle);
+                let task = project.getTask(taskTitle);
+                if (task) populateTaskForm(task);
+            }
+        }
+    };
+
+    const populateTaskForm = (task) => {
+        const title = _taskForm.querySelector('.task-title');
+        const desc = _taskForm.querySelector('.task-desc');
+        const date = _taskForm.querySelector('.task-date');
+        const priorities = _taskForm.querySelectorAll('input[type=radio]');
+        const done = _taskForm.querySelector('.task-done');
+
+        title.innerText = task.getTitle();
+        desc.innerText = task.getDesc();
+        date.valueAsDate = task.getDate();
+        Array.from(priorities)[task.getPriority()].checked = true;
+        done.checked = task.isDone();
     };
 
     return {

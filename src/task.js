@@ -1,4 +1,10 @@
-const Task = (title, desc='This is a task', dueDate='Now', priority='High', done=false) => {
+const Task = (
+    title,
+    desc='You can write a description here.',
+    dueDate=new Date(),
+    priority=2,
+    done=false) => {
+
     let _title = title;
     let _desc = desc;
     let _dueDate = dueDate;
@@ -11,8 +17,8 @@ const Task = (title, desc='This is a task', dueDate='Now', priority='High', done
     const getDesc = () => _desc;
     const setDesc = (desc) => _desc = desc;
 
-    const getDueDate = () => _dueDate;
-    const setDueDate = (dueDate) => _dueDate = dueDate;
+    const getDate = () => _dueDate;
+    const setDate = (dueDate) => _dueDate = dueDate;
 
     const getPriority = () => _priority;
     const setPriority = (priority) => _priority = priority;
@@ -26,7 +32,8 @@ const Task = (title, desc='This is a task', dueDate='Now', priority='High', done
             title: _title,
             desc: _desc,
             dueDate: _dueDate,
-            priority: _priority
+            priority: _priority,
+            done: _done
         }
     };
 
@@ -35,8 +42,8 @@ const Task = (title, desc='This is a task', dueDate='Now', priority='High', done
         setTitle,
         getDesc,
         setDesc,
-        getDueDate,
-        setDueDate,
+        getDate,
+        setDate,
         getPriority,
         setPriority,
         isDone,

@@ -42,9 +42,7 @@ const Storage = (() => {
 
     const removeTaskFromProject = (taskTitle, projectTitle) => {
         let project = _projects.find(project => projectTitle === project.getTitle());
-        let tasks = project.getTasks();
-        let index = tasks.indexOf(tasks.find(task => taskTitle === task.getTitle()));
-        tasks.splice(index, 1);
+        project.removeTask(taskTitle);
         saveToLocalStorage();
         return true;
     };
@@ -66,11 +64,6 @@ const Storage = (() => {
                 newProject.addTask(newTask);
             });
         });
-
-        /*
-        if (!projects || Object.keys(projects[0]).length === 0 && projects[0].constructor === Object) return;
-        _projects = projects;
-        */
     };
 
     return {
