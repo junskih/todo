@@ -1,12 +1,14 @@
 import Project from '../src/project';
 import Task from '../src/task';
+import parseJSON from 'date-fns/parseJSON';
+import {v4 as uuidv4} from 'uuid';
 
 const Storage = (() => {
     let _storageItemName = 'projects';
     let _projects = [];
 
     const addProject = (title) => {
-        let project = Project(title);
+        let project = Project(uuidv4(), title);
         _projects.push(project);
         saveToLocalStorage();
         return project;
@@ -19,32 +21,39 @@ const Storage = (() => {
         return _projects;
     };
 
-    const getProject = (title) => {
-        return _projects.find(project => project.getTitle() === title);
-    };
+    const getProject = (id) => _projects.find(project => project.getID() === id);
 
-    const removeProject = (title) => {
-        let index = _projects.indexOf(_projects.find(project => project.getTitle() === title));
+    const removeProject = (id) => {
+        let index = _projects.indexOf(_projects.find(project => project.getID() === id));
         if (index === undefined) return false;
         _projects.splice(index, 1);
         saveToLocalStorage();
-        return true;
-        // use .filter?
     };
 
-    const addTaskToProject = (taskTitle, projectTitle) => {
-        let project = _projects.find(project => projectTitle === project.getTitle());
-        let task = Task(taskTitle);
+    const addTaskToProject = (taskTitle, projectID) => {
+        let project = getProject(projectID);
+        let task = Task(uuidv4(), taskTitle);
         project.addTask(task);
         saveToLocalStorage();
         return task;
     };
 
-    const removeTaskFromProject = (taskTitle, projectTitle) => {
-        let project = _projects.find(project => projectTitle === project.getTitle());
-        project.removeTask(taskTitle);
+    const removeTaskFromProject = (taskID, projectID) => {
+        let project = getProject(projectID);
+        project.removeTask(taskID);
         saveToLocalStorage();
-        return true;
+    };
+
+    const updateTask = (projectID, taskID, title, desc, date, priority, done) => {
+        let project = getProject(projectID);
+        let task = project.getTask(taskID);
+        task.setTitle(title);
+        task.setDesc(desc);
+        task.setDate(date);
+        task.setPriority(priority);
+        task.setDone(done);
+        saveToLocalStorage();
+        return task;
     };
 
     const saveToLocalStorage = () => {
@@ -56,11 +65,18 @@ const Storage = (() => {
         
         // Construct objects from stored data
         projects.forEach(project => {
-            let newProject = Project(project.title);
+            let newProject = Project(project.id, project.title);
             _projects.push(newProject);
 
             project.tasks.forEach(task => {
-                let newTask = Task(task.title);
+                let id = task.id;
+                let title = task.title;
+                let desc = task.desc;
+                let date = parseJSON(task.date);
+                let priority = task.priority;
+                let done = task.done;
+
+                let newTask = Task(id, title, desc, date, priority, done);
                 newProject.addTask(newTask);
             });
         });
@@ -72,7 +88,8 @@ const Storage = (() => {
         getProject,
         removeProject,
         addTaskToProject,
-        removeTaskFromProject
+        removeTaskFromProject,
+        updateTask
     };
 })();
 
