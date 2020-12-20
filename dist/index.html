@@ -10,7 +10,7 @@
     <body>
         <div id='wrapper'>
             <header>
-                <h2>Not Todoist</h2>
+                <h1 class='page-title'>Not Todoist</h1>
             </header>
 
             <nav>
@@ -37,7 +37,7 @@
                 <h2 id='project-title'></h2>
 
                 <ul id='task-list'>
-                    <li id='add-task-item'>
+                    <li class='add-task-item'>
                         <label id='add-task-label' class='label-toggle'><i class="fas fa-plus"></i> Add task</label>
                         <input id='add-task-input' class='input-toggle' type='text' placeholder='Task name'>
                     </li>
@@ -45,8 +45,10 @@
 
                 <template id='task-template'>
                     <li class='task'>
-                        <i class='far fa-check-circle'></i>
-                        <input type='checkbox'>
+                        <div class='task-header'>
+                            <input class='task-done' type='checkbox'>
+                            <h3 class='task-title'></h3>
+                        </div>
                         <i class="far fa-trash-alt"></i>
                     </li>
                 </template>
@@ -54,28 +56,30 @@
 
             <form class='task-form'>
                 <div>
-                    <input class='task-done' type='checkbox'>
-                    <h2 class='task-title' contenteditable='true'>Task title
-                        <i class="fas fa-pen"></i>
-                    </h2>
+                    <div class='task-form-header'>
+                        <input class='task-form-done' type='checkbox'>
+                        <h2 class='task-form-title' contenteditable='true'>Task title
+                            <i class="fas fa-pen"></i>
+                        </h2>
+                    </div>
 
-                    <p class='task-desc'>This is the task description.</p>
+                    <p class='task-form-desc' contenteditable='true'>This is the task description.</p>
 
-                    <input class='task-date' type='date'>
+                    <input class='task-form-date' type='date'>
 
-                    <p>Priority</p>
-                    <ul class='task-priority-list'>
-                        <li class='task-priority-item'>
+                    <h4>Priority</h4>
+                    <ul class='task-form-priority-list'>
+                        <li class='task-form-priority-item'>
                             <label for='priority-low'>Low</label>
                             <input id='priority-low' type='radio' name='priority'>
                         </li>
                         
-                        <li class='task-priority-item'>
+                        <li class='task-form-priority-item'>
                             <label for='priority-normal'>Normal</label>
                             <input id='priority-normal' type='radio' name='priority'>
                         </li>
 
-                        <li class='task-priority-item'>
+                        <li class='task-form-priority-item'>
                             <label for='priority-high'>High</label>
                             <input id='priority-high' type='radio' name='priority'>
                         </li>
@@ -84,7 +88,7 @@
                 </div>
 
                 <div class='task-form-button-container'>
-                    <button class='task-form-button submit-button'>Save</button>
+                    <button class='task-form-button save-button'>Save</button>
                     <button class='task-form-button cancel-button'>Cancel</button>
                 </div>
             </form>
