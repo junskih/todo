@@ -1,15 +1,19 @@
 const Task = (
+    id,
     title,
     desc='You can write a description here.',
-    dueDate=new Date(),
-    priority=2,
+    date=new Date(),
+    priority=1,
     done=false) => {
 
+    const _id = id;
     let _title = title;
     let _desc = desc;
-    let _dueDate = dueDate;
+    let _date = date;
     let _priority = priority;
     let _done = done;
+
+    const getID = () => _id;
 
     const getTitle = () => _title;
     const setTitle = (title) => _title = title;
@@ -17,8 +21,8 @@ const Task = (
     const getDesc = () => _desc;
     const setDesc = (desc) => _desc = desc;
 
-    const getDate = () => _dueDate;
-    const setDate = (dueDate) => _dueDate = dueDate;
+    const getDate = () => _date;
+    const setDate = (date) => _date = date;
 
     const getPriority = () => _priority;
     const setPriority = (priority) => _priority = priority;
@@ -29,15 +33,17 @@ const Task = (
     // Information to be stored in localStorage
     const toJSON = () => {
         return {
+            id: _id,
             title: _title,
             desc: _desc,
-            dueDate: _dueDate,
+            date: _date,
             priority: _priority,
             done: _done
         }
     };
 
     return {
+        getID,
         getTitle,
         setTitle,
         getDesc,
