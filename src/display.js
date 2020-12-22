@@ -1,7 +1,9 @@
+// Transitioning height: https://css-tricks.com/using-css-transitions-auto-dimensions/
 import Storage from '../src/storage';
 
 const Display = (() => {
     const _navHeader = document.querySelector('.nav-header');
+    
     const _projectList = document.querySelector('#project-list');
     const _projectView = document.querySelector('#project-view');
     const _projectTitle = _projectView.querySelector('#project-title');
@@ -39,10 +41,12 @@ const Display = (() => {
                     break;
             }
         });
-        _navHeader.addEventListener('click', toggleProjectList);
+        _navHeader.addEventListener('click', toggleNavList);
         _taskFormSaveButton.addEventListener('click', toggleTaskForm);
         _taskFormCancelButton.addEventListener('click', toggleTaskForm);
-        populateProjectList();
+        _projectList.dataset.collapsed = false;
+        let projects = Storage.getProjects();
+        populateProjectList(projects);
     };
 
     const getProject = (id) => {
@@ -54,16 +58,42 @@ const Display = (() => {
         return Array.from(taskEls).find(task => task.dataset.taskid === id);
     };
 
-    const toggleProjectList = (e) => {
-        if (!e.target.classList.contains('nav-header')) return;
-
-        let items = document.querySelectorAll('li');
-        let chevron = _navHeader.querySelector('i');
-
-        items.forEach(item => {
-            item.classList.toggle('nav-item--expanded');
-        });
+    const toggleNavList = (e) => {
+        // List corresponding to header
+        const header = e.target;
+        const list = header.parentNode.querySelector('.nav-item-list');
+        const resetHeight = () => {
+            list.removeEventListener('transitionend', resetHeight);
+            list.style.height = null;
+        };
+        const chevron = header.parentNode.querySelector('.nav-chevron');
         chevron.classList.toggle('nav-chevron--rotate');
+        
+        let collapsed = list.dataset.collapsed === 'true';
+        let listHeight = list.scrollHeight;
+        
+        // Collapse list
+        if (!collapsed) {
+            let transition = list.transition;
+            list.transition = '';
+
+            requestAnimationFrame(() => {
+                // Set height to actual height instead of auto to be able to transition properly
+                list.style.height = `${listHeight}px`;
+                list.transition = transition;
+    
+                requestAnimationFrame(() => {
+                    list.style.height = `${0}px`;
+                });
+            });
+            list.dataset.collapsed = true;
+
+        // Expand list
+        } else {
+            list.style.height = `${listHeight}px`;
+            list.addEventListener('transitionend', resetHeight);
+            list.dataset.collapsed = false;
+        }
     };
 
     const toggleLabelInput = (e) => {
@@ -84,8 +114,7 @@ const Display = (() => {
         }
     };
     
-    const populateProjectList = () => {
-        let projects = Storage.getProjects();
+    const populateProjectList = (projects) => {
         if (!projects) return;
         projects.forEach(project => {
             addToProjectList(project);
@@ -94,7 +123,7 @@ const Display = (() => {
 
     const addToProjectList = (project) => {
         const navItemTemplate = document.querySelector('#nav-item-template');
-        const projectList = _navHeader.querySelector('ul');
+        const projectList = document.querySelector('#project-list');
 
         let clone = navItemTemplate.content.cloneNode(true);
         let item = clone.querySelector('li');
@@ -103,7 +132,7 @@ const Display = (() => {
         item.dataset.projectid = project.getID();
 
         item.insertAdjacentHTML('afterbegin', project.getTitle());
-        projectList.insertBefore(clone, projectList.lastElementChild);
+        _projectList.insertBefore(clone, _projectList.lastElementChild);
 
         item.addEventListener('click', showProject);
         trash.addEventListener('click', removeProject);
@@ -213,12 +242,11 @@ const Display = (() => {
             let priority = priorities.indexOf(priorities.find(priority => priority.checked));
             let done = _taskForm.querySelector('.task-form-done').checked;
             let task = Storage.updateTask(projectID, taskID, title, desc, date, priority, done);
-            updateTask(task);
+            updateTaskElement(task);
 
         } else if (!classes.contains('cancel-button')) {
             return;
         }
-        // TODO: Dont show form in case task doesnt exist
         _taskForm.classList.toggle('task-form--visible');
     };
 
@@ -236,7 +264,7 @@ const Display = (() => {
         done.checked = task.isDone();
     };
 
-    const updateTask = (task) => {
+    const updateTaskElement = (task) => {
         let taskEl = getTask(task.getID());
         let title = taskEl.querySelector('.task-title');
         let done = taskEl.querySelector('.task-done');

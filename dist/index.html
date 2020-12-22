@@ -15,10 +15,12 @@
 
             <nav>
                 <ul id='nav-list'>
-                    <li class='nav-header'>
-                        <i class='fas fa-chevron-right nav-chevron nav-chevron--rotate'></i> Projects
-                        <ul id='project-list'>
-                            <li class='nav-item nav-item--expanded'>
+                    <li class='nav-group'>
+                        <div class='nav-header'>
+                            <i class='fas fa-chevron-right nav-chevron nav-chevron--rotate'></i> Projects
+                        </div>
+                        <ul id='project-list' class='nav-item-list'>
+                            <li class='nav-item'>
                                 <label id='add-project-text' class='label-toggle'><i class="fas fa-plus"></i> Add project</label>
                                 <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name'>
                             </li>
@@ -34,7 +36,7 @@
             </nav>
 
             <section id='project-view'>
-                <h2 id='project-title'></h2>
+                <h2 id='project-title' contenteditable='true'></h2>
 
                 <ul id='task-list'>
                     <li class='add-task-item'>
