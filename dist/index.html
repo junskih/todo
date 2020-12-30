@@ -22,7 +22,7 @@
                         <ul id='project-list' class='nav-item-list'>
                             <li class='nav-item'>
                                 <label id='add-project-text' class='label-toggle'><i class="fas fa-plus"></i> Add project</label>
-                                <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name'>
+                                <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name' required>
                             </li>
                         </ul>
                     </li>
@@ -30,18 +30,22 @@
 
                 <template id='nav-item-template'>
                     <li class='nav-item nav-item--expanded'>
+                        <p class='nav-item-title'></p>
                         <i class="far fa-trash-alt"></i>
                     </li>
                 </template>
             </nav>
 
-            <section id='project-view'>
-                <h2 id='project-title' contenteditable='true'></h2>
+            <main id='project-view'>
+                <div class='project-header'>
+                    <p id='project-title' class='project-title' type='text' contenteditable='true'></p>
+                    <i class="fas fa-pen"></i>
+                </div>
 
                 <ul id='task-list'>
                     <li class='add-task-item'>
                         <label id='add-task-label' class='label-toggle'><i class="fas fa-plus"></i> Add task</label>
-                        <input id='add-task-input' class='input-toggle' type='text' placeholder='Task name'>
+                        <input id='add-task-input' class='input-toggle' type='text' placeholder='Task name' required>
                     </li>
                 </ul>
 
@@ -51,50 +55,59 @@
                             <input class='task-done' type='checkbox'>
                             <h3 class='task-title'></h3>
                         </div>
+                        <p class='task-desc'></p>
+                        <p class='task-date'>23.12.2020</p>
                         <i class="far fa-trash-alt"></i>
                     </li>
                 </template>
-            </section>
+            </main>
+        </div>
+        
+        <form class='task-form'>
+            <div>
+                <div class='task-form-group'>
+                    <input class='task-form-done' type='checkbox'>
+                    <h3 class='task-form-title' type='text' contenteditable='true'></h3>
+                    <i class='fas fa-pen'></i>
+                </div>
 
-            <form class='task-form'>
-                <div>
-                    <div class='task-form-header'>
-                        <input class='task-form-done' type='checkbox'>
-                        <h2 class='task-form-title' contenteditable='true'>Task title
-                            <i class="fas fa-pen"></i>
-                        </h2>
-                    </div>
+                <h4>Description</h4>
+                <div class='task-form-group'>
+                    <p class='task-form-desc' type='text' contenteditable='true'></p>
+                    <i class='fas fa-pen'></i>
+                </div>
 
-                    <p class='task-form-desc' contenteditable='true'>This is the task description.</p>
-
+                <h4>Due</h4>
+                <div class='task-form-group'>
                     <input class='task-form-date' type='date'>
+                </div>
 
-                    <h4>Priority</h4>
+                <h4>Priority</h4>
+                <div class='task-form-group'>
                     <ul class='task-form-priority-list'>
                         <li class='task-form-priority-item'>
                             <label for='priority-low'>Low</label>
-                            <input id='priority-low' type='radio' name='priority'>
-                        </li>
-                        
-                        <li class='task-form-priority-item'>
-                            <label for='priority-normal'>Normal</label>
-                            <input id='priority-normal' type='radio' name='priority'>
-                        </li>
-
-                        <li class='task-form-priority-item'>
-                            <label for='priority-high'>High</label>
-                            <input id='priority-high' type='radio' name='priority'>
-                        </li>
-                        
+                        <input id='priority-low' type='radio' name='priority'>
+                    </li>
+                    
+                    <li class='task-form-priority-item'>
+                        <label for='priority-normal'>Normal</label>
+                        <input id='priority-normal' type='radio' name='priority'>
+                    </li>
+                    
+                    <li class='task-form-priority-item'>
+                        <label for='priority-high'>High</label>
+                        <input id='priority-high' type='radio' name='priority'>
+                    </li>
                     </ul>
                 </div>
+            </div>
 
-                <div class='task-form-button-container'>
-                    <button class='task-form-button save-button'>Save</button>
-                    <button class='task-form-button cancel-button'>Cancel</button>
-                </div>
-            </form>
-        </div>
+            <div class='task-form-button-container'>
+                <button class='task-form-button save-button'>Save</button>
+                <button class='task-form-button cancel-button'>Cancel</button>
+            </div>
+        </form>
         <script src='main.js'></script>
     </body>
 </html>
