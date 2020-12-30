@@ -1,11 +1,14 @@
 // Transitioning height: https://css-tricks.com/using-css-transitions-auto-dimensions/
 import Storage from '../src/storage';
+import {format} from 'date-fns'
 
 const Display = (() => {
+    const _wrapper = document.querySelector('#wrapper');
     const _navHeader = document.querySelector('.nav-header');
-    
     const _projectList = document.querySelector('#project-list');
+
     const _projectView = document.querySelector('#project-view');
+    const _projectHeader = document.querySelector('.project-header');
     const _projectTitle = _projectView.querySelector('#project-title');
 
     const _taskList = document.querySelector('#task-list');
@@ -42,18 +45,20 @@ const Display = (() => {
             }
         });
         _navHeader.addEventListener('click', toggleNavList);
-        _taskFormSaveButton.addEventListener('click', toggleTaskForm);
+        _projectTitle.addEventListener('input', updateProject);
+        _taskFormSaveButton.addEventListener('click', updateTask);
         _taskFormCancelButton.addEventListener('click', toggleTaskForm);
         _projectList.dataset.collapsed = false;
         let projects = Storage.getProjects();
         populateProjectList(projects);
     };
 
-    const getProject = (id) => {
-        _projectList.querySelectorAll('.project').find(task => task.dataset.taskid === id);
+    const getProjectEl = (id) => {
+        const projectEls = _projectList.querySelectorAll('.project')
+        return Array.from(projectEls).find(project => project.dataset.projectid === id);
     };
 
-    const getTask = (id) => {
+    const getTaskEl = (id) => {
         const taskEls = _taskList.querySelectorAll('.task');
         return Array.from(taskEls).find(task => task.dataset.taskid === id);
     };
@@ -123,18 +128,18 @@ const Display = (() => {
 
     const addToProjectList = (project) => {
         const navItemTemplate = document.querySelector('#nav-item-template');
-        const projectList = document.querySelector('#project-list');
 
         let clone = navItemTemplate.content.cloneNode(true);
-        let item = clone.querySelector('li');
-        let trash = clone.querySelector('i');
+        let item = clone.querySelector('.nav-item');
+        let title = clone.querySelector('.nav-item-title');
+        let trash = clone.querySelector('.fa-trash-alt');
 
         item.dataset.projectid = project.getID();
 
-        item.insertAdjacentHTML('afterbegin', project.getTitle());
+        title.innerText = project.getTitle();
         _projectList.insertBefore(clone, _projectList.lastElementChild);
 
-        item.addEventListener('click', showProject);
+        title.addEventListener('click', displayProject);
         trash.addEventListener('click', removeProject);
         item.classList.add('project');
     }
@@ -149,8 +154,10 @@ const Display = (() => {
         e.target.blur();
     };
 
-    const showProject = (e) => {
-        let id = e.target.dataset.projectid;
+    const displayProject = (e) => {
+        const highlightedClass = 'nav-item--highlighted';
+
+        let id = e.target.parentNode.dataset.projectid;
         if (!id) return;
 
         let project = Storage.getProject(id);
@@ -163,7 +170,15 @@ const Display = (() => {
         
         _projectTitle.innerText = project.getTitle();
         _projectTitle.dataset.projectid = id;
+        _projectHeader.classList.add('project-header--visible');
         
+        // Switch highlight
+        let titles = Array.from(_projectList.querySelectorAll('.nav-item-title'));
+        let highlighted = titles.find(title => title.classList.contains(highlightedClass));
+        if (highlighted) highlighted.classList.remove(highlightedClass);
+        e.target.classList.add(highlightedClass);
+
+        // Add tasks
         let tasks = project.getTasks();
         if (tasks) {
             tasks.forEach(task => addToTaskList(task));
@@ -193,18 +208,23 @@ const Display = (() => {
 
     const addToTaskList = (task) => {
         const taskTemplate = document.querySelector('#task-template');
-        let clone = taskTemplate.content.firstElementChild.cloneNode(true);
-        let done = clone.querySelector('.task-done');
-        let title = clone.querySelector('.task-title');
-        let trash = clone.querySelector('.fa-trash-alt');
+        const clone = taskTemplate.content.firstElementChild.cloneNode(true);
+        const done = clone.querySelector('.task-done');
+        const title = clone.querySelector('.task-title');
+        const desc =  clone.querySelector('.task-desc');
+        const date = clone.querySelector('.task-date');
+        const trash = clone.querySelector('.fa-trash-alt');
 
         clone.dataset.taskid = task.getID();
 
         done.checked = task.isDone();
         title.innerText = task.getTitle();
+        desc.innerText = task.getDesc();
+        date.innerText = format(task.getDate(), 'do MMM yyyy');
         _taskList.insertBefore(clone, _taskList.lastElementChild);
 
-        clone.addEventListener('click', toggleTaskForm);
+        done.addEventListener('change', setTaskDone);
+        clone.addEventListener('click', displayTask);
         trash.addEventListener('click', removeTask);
     };
 
@@ -217,37 +237,27 @@ const Display = (() => {
             task.remove();
         }
     };
-    
-    const toggleTaskForm = (e) => {
-        e.preventDefault();
-        let classes = e.target.classList;
-        let projectID = _projectTitle.dataset.projectid;
 
-        if (classes.contains('task')) {
-            // Open form and show task details
-            let taskID = e.target.dataset.taskid;
+    const displayTask = (e) => {
+        if (e.currentTarget.classList.contains('task') &&
+            !e.target.classList.contains('fa-trash-alt') &&
+            !e.target.classList.contains('task-done')) {
+            let projectID = _projectTitle.dataset.projectid;
+            let taskID = e.currentTarget.dataset.taskid;
+
             let project = Storage.getProject(projectID);
             let task = project.getTask(taskID);
-            _taskForm.dataset.taskid = taskID;
             if (!task) return;
+
             populateTaskForm(task);
-
-        } else if (classes.contains('save-button')) {
-            // Update task properties "if" changed
-            let taskID = _taskForm.dataset.taskid;
-            let title = _taskForm.querySelector('.task-form-title').innerText;
-            let desc = _taskForm.querySelector('.task-form-desc').innerText;
-            let date = _taskForm.querySelector('.task-form-date').valueAsDate;
-            let priorities = Array.from(_taskForm.querySelectorAll('input[type=radio]'));
-            let priority = priorities.indexOf(priorities.find(priority => priority.checked));
-            let done = _taskForm.querySelector('.task-form-done').checked;
-            let task = Storage.updateTask(projectID, taskID, title, desc, date, priority, done);
-            updateTaskElement(task);
-
-        } else if (!classes.contains('cancel-button')) {
-            return;
+            toggleTaskForm();
         }
+    };
+    
+    const toggleTaskForm = (e) => {
+        e?.preventDefault();
         _taskForm.classList.toggle('task-form--visible');
+        _wrapper.classList.toggle('wrapper--blurred');
     };
 
     const populateTaskForm = (task) => {
@@ -262,14 +272,59 @@ const Display = (() => {
         date.valueAsDate = task.getDate();
         Array.from(priorities)[task.getPriority()].checked = true;
         done.checked = task.isDone();
+
+        _taskForm.dataset.taskid = task.getID();
     };
 
-    const updateTaskElement = (task) => {
-        let taskEl = getTask(task.getID());
-        let title = taskEl.querySelector('.task-title');
-        let done = taskEl.querySelector('.task-done');
-        title.innerText = task.getTitle();
-        done.checked = task.isDone();
+    const updateTask = (e) => {
+        e.preventDefault();
+        let projectID = _projectTitle.dataset.projectid;
+        let taskID = _taskForm.dataset.taskid;
+
+        // Get new properties
+        let title = _taskForm.querySelector('.task-form-title').innerText;
+        let desc = _taskForm.querySelector('.task-form-desc').innerText;
+        let date = _taskForm.querySelector('.task-form-date').valueAsDate;
+        let priorities = Array.from(_taskForm.querySelectorAll('input[type=radio]'));
+        let priority = priorities.indexOf(priorities.find(priority => priority.checked));
+        let done = _taskForm.querySelector('.task-form-done').checked;
+
+        // Set new properties
+        let task = Storage.updateTask({ projectID, taskID, title, desc, date, priority, done });
+
+        // Update task element
+        let taskEl = getTaskEl(taskID);
+        let taskTitle = taskEl.querySelector('.task-title');
+        let taskDone = taskEl.querySelector('.task-done');
+        let taskDesc = taskEl.querySelector('.task-desc');
+        let taskDate = taskEl.querySelector('.task-date');
+        taskTitle.innerText = task.getTitle();
+        taskDone.checked = task.isDone();
+        taskDesc.innerText = task.getDesc();
+        taskDate.innerText = format(task.getDate(), 'do MMM yyyy');
+
+        toggleTaskForm();
+    };
+
+    const setTaskDone = (e) => {
+        if (e.target.classList.contains('task-done')) {
+            let projectID = _projectTitle.dataset.projectid;
+            let taskID = e.target.closest('.task').dataset.taskid;
+            let done = e.target.checked;
+            Storage.updateTask({ projectID, taskID, done });
+        }
+    };
+
+    const updateProject = (e) => {
+        let projectID = _projectTitle.dataset.projectid;
+        let newTitle = _projectTitle.innerText;
+        let project = Storage.updateProject({
+            projectID: projectID,
+            title: newTitle
+        });
+    
+        let projectEl = getProjectEl(projectID);
+        projectEl.querySelector('.nav-item-title').innerText = project.getTitle();
     };
 
     return {

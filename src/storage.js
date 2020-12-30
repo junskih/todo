@@ -44,14 +44,21 @@ const Storage = (() => {
         saveToLocalStorage();
     };
 
-    const updateTask = (projectID, taskID, title, desc, date, priority, done) => {
+    const updateProject = ({ projectID, title }) => {
+        let project = getProject(projectID);
+        if (title) project.setTitle(title);
+        saveToLocalStorage();
+        return project;
+    };
+
+    const updateTask = ({ projectID, taskID, title, desc, date, priority, done }) => {
         let project = getProject(projectID);
         let task = project.getTask(taskID);
-        task.setTitle(title);
-        task.setDesc(desc);
-        task.setDate(date);
-        task.setPriority(priority);
-        task.setDone(done);
+        if (title) task.setTitle(title);
+        if (desc) task.setDesc(desc);
+        if (date) task.setDate(date);
+        if (priority) task.setPriority(priority);
+        if (typeof done === 'boolean') task.setDone(done);
         saveToLocalStorage();
         return task;
     };
@@ -89,6 +96,7 @@ const Storage = (() => {
         removeProject,
         addTaskToProject,
         removeTaskFromProject,
+        updateProject,
         updateTask
     };
 })();
