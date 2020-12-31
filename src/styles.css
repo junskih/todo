@@ -6,6 +6,9 @@
     --task-form-button-hover-duration: 0.1s;
     --editable-border-color: rgba(128, 128, 128, 0.3);
     --editable-border-duration: 0.1s;
+    --priority-low-color: rgb(255, 186, 0);
+    --priority-normal-color: rgb(34, 207, 70);
+    --priority-high-color: rgb(203, 20, 21);
 }
 
 * {
@@ -98,18 +101,18 @@ nav > ul {
     color: var(--highlight-color);
 }
 
-.nav-item > .fa-trash-alt {
+.nav-item > i {
     visibility: hidden;
     font-size: 0.8em;
     margin: 0 0 0 0.5em;
 }
 
-.nav-item:hover > .fa-trash-alt {
+.nav-item:hover > i {
     visibility: visible;
     color: black;
 }
 
-.nav-item:hover > .fa-trash-alt:hover {
+.nav-item:hover > i:hover {
     color: var(--highlight-color);
 }
 
@@ -155,12 +158,8 @@ nav > ul {
 
 .add-task-item {
     display: flex;
-    justify-content: center;
-    opacity: 0;
-}
-
-.add-task-item--visible {
-    opacity: 1;
+    justify-content: start;
+    grid-column: 1;
 }
 
 #add-task-input {
@@ -180,11 +179,6 @@ nav > ul {
     display: flex;
     align-items: baseline;
     margin: 0 0 1em 0;
-    visibility: hidden;
-}
-
-.project-header--visible {
-    visibility: visible;
 }
 
 .project-title {
@@ -198,6 +192,11 @@ nav > ul {
     overflow-wrap: break-word;
     word-wrap: break-word;
     transition: border-color 0.1s ease;
+}
+
+.project-title:empty::before {
+    content: 'Enter title';
+    color: grey;
 }
 
 .project-title:hover, .project-title:focus {
@@ -222,9 +221,9 @@ nav > ul {
 
 #task-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, 225px);
     gap: 1em;
-    align-items: center;
+    align-items: start;
     list-style-type: none;
 }
 
@@ -243,7 +242,7 @@ nav > ul {
 }
 
 .task:hover {
-    box-shadow: 0px 1px 5px grey;
+    box-shadow: 0px 1px 7px grey;
 }
 
 .task > .fa-trash-alt {
@@ -257,6 +256,22 @@ nav > ul {
 
 .task > i:hover {
     color: var(--highlight-color);
+}
+
+.task--completed {
+    opacity: 0.7;
+}
+
+.task--priority-low {
+    border: 2px solid var(--priority-low-color);
+}
+
+.task--priority-normal {
+    border: 2px solid var(--priority-normal-color);
+}
+
+.task--priority-high {
+    border: 2px solid var(--priority-high-color);
 }
 
 .task-header {
@@ -302,23 +317,20 @@ nav > ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
     width: 400px;
     height: auto;
     padding: 1em;
     background-color: white;
     border-radius: 0.5em;
-    box-shadow: -2px 2px 5px grey;
-    
+    box-shadow: 3px 3px 5px grey;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.2s ease-out;
+    transition: opacity var(--task-form-show-duration) ease-out;
 }
 
 .task-form--visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.2s ease-out;
 }
 
 .task-form-group {
@@ -347,6 +359,11 @@ nav > ul {
     transition: border-color var(--editable-border-duration) ease;
 }
 
+.task-form-title:empty::before {
+    content: 'Enter title';
+    color: grey;
+}
+
 .task-form-title:hover, .task-form-title:focus {
     border-color: var(--editable-border-color);
     outline: none;
@@ -373,6 +390,11 @@ nav > ul {
     transition: border-color var(--editable-border-duration) ease;
 }
 
+.task-form-desc:empty::before {
+    content: 'You can write a description here.';
+    color: grey;
+}
+
 .task-form-desc:hover, .task-form-desc:focus {
     border-color: var(--editable-border-color);
     outline: none;
@@ -392,10 +414,52 @@ nav > ul {
 .task-form-priority-list {
     display: flex;
     list-style-type: none;
+    margin: 1em 0 0 0;
 }
 
-.task-form-priority-item {
-    /* TODO */
+input[name='priority'] ~ label {
+    border-radius: 0.5em;
+    padding: 0.25em;
+    margin: 0 1em 0 0;
+    font-weight: 700;
+    border-width: 3px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+input[name='priority'] {
+    display: none;
+}
+
+input[name='priority']:checked ~ label {
+    color: white;
+}
+
+input[name='priority']:checked ~ label[for='priority-low'] {
+    background-color: var(--priority-low-color);
+    box-shadow: 0px 0px 5px var(--priority-low-color);
+}
+
+input[name='priority']:checked ~ label[for='priority-normal'] {
+    background-color: var(--priority-normal-color);
+    box-shadow: 0px 0px 5px var(--priority-normal-color);
+}
+
+input[name='priority']:checked ~ label[for='priority-high'] {
+    background-color: var(--priority-high-color);
+    box-shadow: 0px 0px 5px var(--priority-high-color);
+}
+
+label[for='priority-low'] {
+    border-color: var(--priority-low-color);
+}
+
+label[for='priority-normal'] {
+    border-color: var(--priority-normal-color);
+}
+
+label[for='priority-high'] {
+    border-color: var(--priority-high-color);
 }
 
 .task-form-button-container {
