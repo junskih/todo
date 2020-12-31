@@ -1,7 +1,7 @@
 const Task = (
     id,
     title,
-    desc='You can write a description here.',
+    desc='',
     date=new Date(),
     priority=1,
     done=false) => {
@@ -14,19 +14,14 @@ const Task = (
     let _done = done;
 
     const getID = () => _id;
-
     const getTitle = () => _title;
     const setTitle = (title) => _title = title;
-
     const getDesc = () => _desc;
     const setDesc = (desc) => _desc = desc;
-
     const getDate = () => _date;
     const setDate = (date) => _date = date;
-
     const getPriority = () => _priority;
     const setPriority = (priority) => _priority = priority;
-
     const isDone = () => _done;
     const setDone = (done) => _done = done;
 
