@@ -4,10 +4,8 @@ const Project = (id, title) => {
     let _tasks = [];
 
     const getID = () => _id;
-    
     const getTitle = () => _title;
     const setTitle = (title) => _title = title;
-
     const getTask = (id) => _tasks.find(task => task.getID() === id);
     const getTasks = () => _tasks;
     const addTask = (task) => _tasks.push(task);
