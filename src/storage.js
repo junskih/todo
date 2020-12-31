@@ -46,7 +46,7 @@ const Storage = (() => {
 
     const updateProject = ({ projectID, title }) => {
         let project = getProject(projectID);
-        if (title) project.setTitle(title);
+        if (project && typeof title === 'string' && title.trim() !== '') project.setTitle(title);
         saveToLocalStorage();
         return project;
     };
@@ -54,10 +54,10 @@ const Storage = (() => {
     const updateTask = ({ projectID, taskID, title, desc, date, priority, done }) => {
         let project = getProject(projectID);
         let task = project.getTask(taskID);
-        if (title) task.setTitle(title);
-        if (desc) task.setDesc(desc);
-        if (date) task.setDate(date);
-        if (priority) task.setPriority(priority);
+        if (typeof title === 'string' && title.trim() !== '') task.setTitle(title);
+        if (typeof desc === 'string') task.setDesc(desc);
+        if (date instanceof Date) task.setDate(date);
+        if (typeof priority === 'number') task.setPriority(priority);
         if (typeof done === 'boolean') task.setDone(done);
         saveToLocalStorage();
         return task;
@@ -69,6 +69,12 @@ const Storage = (() => {
 
     const loadFromLocalStorage = () => {
         let projects = JSON.parse(localStorage.getItem(_storageItemName));
+
+        if (!projects) {
+            let defaultProject = add(Project('Default project'));
+            addTaskToProject('Default task', defaultProject.getID());
+            _projects.push(defaultProject);
+        }
         
         // Construct objects from stored data
         projects.forEach(project => {
