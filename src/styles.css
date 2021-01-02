@@ -1,508 +1,516 @@
 :root {
-    --highlight-color: #DB4C3F;
-    --contrast-color: #dadada;
-    --nav-list-toggle-duration: 0.3s;
-    --task-form-show-duration: 0.1s;
-    --task-form-button-hover-duration: 0.1s;
-    --editable-border-color: rgba(128, 128, 128, 0.3);
-    --editable-border-duration: 0.1s;
-    --priority-low-color: rgb(255, 186, 0);
-    --priority-normal-color: rgb(34, 207, 70);
-    --priority-high-color: rgb(203, 20, 21);
+  --highlight-color: #db4c3f;
+  --contrast-color: #dadada;
+  --nav-list-toggle-duration: 0.3s;
+  --task-form-show-duration: 0.1s;
+  --task-form-button-hover-duration: 0.1s;
+  --editable-border-color: rgba(128, 128, 128, 0.3);
+  --editable-border-duration: 0.1s;
+  --priority-low-color: rgb(56, 92, 206);
+  --priority-normal-color: rgb(34, 207, 70);
+  --priority-high-color: rgb(203, 20, 21);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #wrapper {
-    transition: filter var(--task-form-show-duration) linear;
+  transition: filter var(--task-form-show-duration) linear;
 }
 
 .wrapper--blurred {
-    filter: blur(5px);
+  filter: blur(5px);
 }
 
 #wrapper {
-    display: grid;
-    position: relative;
-    grid-template-columns: 225px 1fr;
-    grid-template-rows: 60px 1fr;
-    grid-template-areas: 
+  display: grid;
+  position: relative;
+  grid-template-columns: 225px 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
     'header header'
     'nav project';
-    height: 100vh;
+  height: 100vh;
 }
 
 header {
-    display: flex;
-    align-items: center;
-    grid-area: header;
-    background-color: var(--highlight-color);
+  display: flex;
+  align-items: center;
+  grid-area: header;
+  background-color: var(--highlight-color);
 }
 
 .page-title {
-    color: white;
-    margin-left: 1em;
-    font-weight: 600;
-    font-size: 1.5em;
+  color: white;
+  margin-left: 1em;
+  font-weight: 600;
+  font-size: 1.5em;
 }
 
 /* NAV */
 nav {
-    grid-area: nav;
-    background-color: var(--contrast-color);
-    padding: 1em;
+  grid-area: nav;
+  background-color: var(--contrast-color);
+  padding: 1em;
 }
 
 nav > ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .nav-group {
-    font-weight: 600;
-    font-size: 1em;
-    cursor: pointer;
-    margin: 1em 0;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 1em 0;
 }
 
 .nav-chevron {
-    transition: transform var(--nav-list-toggle-duration) ease-in-out;
+  transition: transform var(--nav-list-toggle-duration) ease-in-out;
 }
 
 .nav-chevron--rotate {
-    transform: rotate(90deg);
-    transition: transform var(--nav-list-toggle-duration) ease-in-out;
+  transform: rotate(90deg);
+  transition: transform var(--nav-list-toggle-duration) ease-in-out;
 }
 
 .nav-item-list {
-    height: auto;
-    overflow: hidden;
-    transition: height var(--nav-list-toggle-duration) ease-in-out;
-    margin: 0 1em;
+  height: auto;
+  overflow: hidden;
+  transition: height var(--nav-list-toggle-duration) ease-in-out;
+  margin: 0 1em;
 }
 
 .nav-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9em;
-    font-weight: 400;
-    margin: 0.25em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+  font-weight: 400;
+  margin: 0.25em 0;
 }
 
 .nav-item--highlighted {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .nav-item:hover {
-    color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 .nav-item > i {
-    visibility: hidden;
-    font-size: 0.8em;
-    margin: 0 0 0 0.5em;
+  visibility: hidden;
+  font-size: 0.8em;
+  margin: 0 0 0 0.5em;
 }
 
 .nav-item:hover > i {
-    visibility: visible;
-    color: black;
+  visibility: visible;
+  color: black;
 }
 
 .nav-item:hover > i:hover {
-    color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 .nav-item-title {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .label-toggle:hover {
-    cursor: pointer;
-    color: var(--highlight-color);
+  cursor: pointer;
+  color: var(--highlight-color);
 }
 
 .label-toggle--hidden {
-    display: none;
+  display: none;
 }
 
 .input-toggle {
-    display: none;
-    border: none;
-    outline: none;
-    border-bottom: 2px solid grey;
+  display: none;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid grey;
 }
 
 .input-toggle--shown {
-    display: block;
+  display: block;
 }
 
 #add-project-text {
-    color: grey;
+  color: grey;
 }
 
 #add-project-text:hover {
-    color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 #add-project-input {
-    background-color: var(--contrast-color);
-    font-size: 1em;
-    font-weight: 400;
+  background-color: var(--contrast-color);
+  font-size: 1em;
+  font-weight: 400;
 }
 
 .add-task-item {
-    display: flex;
-    justify-content: start;
-    grid-column: 1;
+  display: flex;
+  justify-content: start;
+  grid-column: 1;
 }
 
 #add-task-input {
-    font-size: 1em;
-    font-weight: 400;
+  font-size: 1em;
+  font-weight: 400;
 }
 
 /* PROJECT VIEW */
 #project-view {
-    display: flex;
-    flex-direction: column;
-    grid-area: project;
-    padding: 1em 2em;
+  display: flex;
+  flex-direction: column;
+  grid-area: project;
+  padding: 1em 2em;
 }
 
 .project-header {
-    display: flex;
-    align-items: baseline;
-    margin: 0 0 1em 0;
+  display: flex;
+  align-items: baseline;
+  margin: 0 0 1em 0;
 }
 
 .project-title {
-    display: inline-flex;
-    font-size: 1.5em;
-    font-weight: 600;
-    width: fit-content;
-    padding: 0.25em;
-    border: 2px solid white;
-    border-radius: 0.5em;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    transition: border-color 0.1s ease;
+  display: inline-flex;
+  font-size: 1.5em;
+  font-weight: 600;
+  width: fit-content;
+  padding: 0.25em;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  transition: border-color 0.1s ease;
 }
 
 .project-title:empty::before {
-    content: 'Enter title';
-    color: grey;
+  content: 'Enter title';
+  color: grey;
 }
 
-.project-title:hover, .project-title:focus {
-    border-color: rgba(128, 128, 128, 0.3);
+.project-title:hover,
+.project-title:focus {
+  border-color: rgba(128, 128, 128, 0.3);
 }
 
 .project-title:focus {
-    outline: none;
+  outline: none;
 }
 
 .project-title + i {
-    height: fit-content;
-    margin: 0 0 0 1em;
-    font-size: 1em;
-    opacity: 0.25;
-    transition: opacity 0.1s ease;
+  height: fit-content;
+  margin: 0 0 0 1em;
+  font-size: 1em;
+  opacity: 0.25;
+  transition: opacity 0.1s ease;
 }
 
-.project-title:hover + i, .project-title:focus + i {
-    opacity: 1;
+.project-title:hover + i,
+.project-title:focus + i {
+  opacity: 1;
 }
 
 #task-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 225px);
-    gap: 1em;
-    align-items: start;
-    list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 225px);
+  gap: 1em;
+  align-items: start;
+  list-style-type: none;
 }
 
 .task {
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 1px 3px grey;
-    border-radius: 0.5em;
-    padding: 0.5em;
-    cursor: pointer;
-    font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 1px 3px grey;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  cursor: pointer;
+  font-size: 1em;
 }
 
 .task > * {
-    margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 .task:hover {
-    box-shadow: 0px 1px 7px grey;
+  box-shadow: 0px 1px 7px grey;
 }
 
 .task > .fa-trash-alt {
-    visibility: hidden;
-    align-self: flex-end;
+  visibility: hidden;
+  align-self: flex-end;
 }
 
 .task:hover > .fa-trash-alt {
-    visibility: visible;
+  visibility: visible;
 }
 
 .task > i:hover {
-    color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 .task--completed {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .task--priority-low {
-    border: 2px solid var(--priority-low-color);
+  border: 2px solid var(--priority-low-color);
 }
 
 .task--priority-normal {
-    border: 2px solid var(--priority-normal-color);
+  border: 2px solid var(--priority-normal-color);
 }
 
 .task--priority-high {
-    border: 2px solid var(--priority-high-color);
+  border: 2px solid var(--priority-high-color);
 }
 
 .task-header {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .task-done {
-    display: inline;
+  display: inline;
 }
 
 .task-title {
-    display: inline;
-    font-weight: 600;
-    font-size: 1em;
+  display: inline;
+  font-weight: 600;
+  font-size: 1em;
 }
 
 .task-desc {
-    font-style: italic;
-    font-size: 0.9em;
-    color: grey;
+  font-style: italic;
+  font-size: 0.9em;
+  color: grey;
 
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .task-date {
-    color: grey;
-    font-size: 0.8em;
-    font-weight: 600;
+  color: grey;
+  font-size: 0.8em;
+  font-weight: 600;
 }
 
 /* TASK FORM */
 .task-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: auto;
-    padding: 1em;
-    background-color: white;
-    border-radius: 0.5em;
-    box-shadow: 3px 3px 5px grey;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity var(--task-form-show-duration) ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: auto;
+  padding: 1em;
+  background-color: white;
+  border-radius: 0.5em;
+  box-shadow: 3px 3px 5px grey;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--task-form-show-duration) ease-out;
 }
 
 .task-form--visible {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 .task-form-group {
-    display: flex;
-    align-items: baseline;
-    margin: 0 0 1.5em 0;
+  display: flex;
+  align-items: baseline;
+  margin: 1em 0 1.5em 0;
 }
 
 .task-form-group > h4 {
-    font-size: 1em;
-    font-weight: 600;
+  font-size: 1em;
+  font-weight: 600;
 }
 
 .task-form-done {
-    display: inline;
-    margin: 0 1em 0 0;
+  display: inline;
+  margin: 0 1em 0 0;
 }
 
 .task-form-title {
-    display: inline-flex;
-    font-size: 1.5em;
-    font-weight: 600;
-    padding: 0.25em;
-    border: 2px solid white;
-    border-radius: 0.5em;
-    transition: border-color var(--editable-border-duration) ease;
+  display: inline-flex;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 0.25em;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  transition: border-color var(--editable-border-duration) ease;
 }
 
 .task-form-title:empty::before {
-    content: 'Enter title';
-    color: grey;
+  content: 'Enter title';
+  color: grey;
 }
 
-.task-form-title:hover, .task-form-title:focus {
-    border-color: var(--editable-border-color);
-    outline: none;
+.task-form-title:hover,
+.task-form-title:focus {
+  border-color: var(--editable-border-color);
+  outline: none;
 }
 
 .task-form-title + i {
-    margin: 0 0 0 0.5em;
-    font-size: 1em;
-    opacity: 0.3;
-    transition: opacity var(--editable-border-duration) ease;
+  margin: 0 0 0 0.5em;
+  font-size: 1em;
+  opacity: 0.3;
+  transition: opacity var(--editable-border-duration) ease;
 }
 
-.task-form-title:hover + i, .task-form-title:focus + i {
-    opacity: 1;
+.task-form-title:hover + i,
+.task-form-title:focus + i {
+  opacity: 1;
 }
 
 .task-form-desc {
-    display: inline-flex;
-    font-style: italic;
-    font-size: 1em;
-    padding: 0.25em;
-    border: 2px solid white;
-    border-radius: 0.5em;
-    transition: border-color var(--editable-border-duration) ease;
+  display: inline-flex;
+  font-style: italic;
+  font-size: 1em;
+  padding: 0.25em;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  transition: border-color var(--editable-border-duration) ease;
 }
 
 .task-form-desc:empty::before {
-    content: 'You can write a description here.';
-    color: grey;
+  content: 'You can write a description here.';
+  color: grey;
 }
 
-.task-form-desc:hover, .task-form-desc:focus {
-    border-color: var(--editable-border-color);
-    outline: none;
+.task-form-desc:hover,
+.task-form-desc:focus {
+  border-color: var(--editable-border-color);
+  outline: none;
 }
 
 .task-form-desc + i {
-    margin: 0 0 0 0.5em;
-    font-size: 1em;
-    opacity: 0.3;
-    transition: opacity var(--editable-border-duration) ease;
+  margin: 0 0 0 0.5em;
+  font-size: 1em;
+  opacity: 0.3;
+  transition: opacity var(--editable-border-duration) ease;
 }
 
-.task-form-desc:hover + i, .task-form-desc:focus + i {
-    opacity: 1;
+.task-form-desc:hover + i,
+.task-form-desc:focus + i {
+  opacity: 1;
 }
 
 .task-form-priority-list {
-    display: flex;
-    list-style-type: none;
-    margin: 1em 0 0 0;
+  display: flex;
+  list-style-type: none;
 }
 
 input[name='priority'] ~ label {
-    border-radius: 0.5em;
-    padding: 0.25em;
-    margin: 0 1em 0 0;
-    font-weight: 700;
-    border-width: 3px;
-    border-style: solid;
-    cursor: pointer;
+  border-radius: 0.5em;
+  padding: 0.25em;
+  margin: 0 1em 0 0;
+  font-weight: 700;
+  border-width: 3px;
+  border-style: solid;
+  cursor: pointer;
 }
 
 input[name='priority'] {
-    display: none;
+  display: none;
 }
 
 input[name='priority']:checked ~ label {
-    color: white;
+  color: white;
 }
 
 input[name='priority']:checked ~ label[for='priority-low'] {
-    background-color: var(--priority-low-color);
-    box-shadow: 0px 0px 5px var(--priority-low-color);
+  background-color: var(--priority-low-color);
+  box-shadow: 0px 0px 5px var(--priority-low-color);
 }
 
 input[name='priority']:checked ~ label[for='priority-normal'] {
-    background-color: var(--priority-normal-color);
-    box-shadow: 0px 0px 5px var(--priority-normal-color);
+  background-color: var(--priority-normal-color);
+  box-shadow: 0px 0px 5px var(--priority-normal-color);
 }
 
 input[name='priority']:checked ~ label[for='priority-high'] {
-    background-color: var(--priority-high-color);
-    box-shadow: 0px 0px 5px var(--priority-high-color);
+  background-color: var(--priority-high-color);
+  box-shadow: 0px 0px 5px var(--priority-high-color);
 }
 
 label[for='priority-low'] {
-    border-color: var(--priority-low-color);
+  border-color: var(--priority-low-color);
 }
 
 label[for='priority-normal'] {
-    border-color: var(--priority-normal-color);
+  border-color: var(--priority-normal-color);
 }
 
 label[for='priority-high'] {
-    border-color: var(--priority-high-color);
+  border-color: var(--priority-high-color);
 }
 
 .task-form-button-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 1em 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0 0 0;
 }
 
 .task-form-button {
-    padding: 0.5em;
-    background-color: white;
-    font-size: 1em;
-    font-weight: 800;
-    border-radius: 0.5em;
-    cursor: pointer;
-    transition: color var(--task-form-button-hover-duration) ease-in-out, transform 0.1s ease-out;
+  padding: 0.5em;
+  background-color: white;
+  font-size: 1em;
+  font-weight: 800;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: color var(--task-form-button-hover-duration) ease-in-out,
+    transform 0.1s ease-out;
 }
 
 .task-form-button:hover {
-    color: white;
+  color: white;
 }
 
 .task-form-button:focus {
-    transform: scale(1.1);
-    outline: none;
+  transform: scale(1.1);
+  outline: none;
 }
 
 .save-button {
-    color: green;
-    border: 2px solid green;
-    transition: background-color var(--task-form-button-hover-duration) ease-in-out;
+  color: green;
+  border: 2px solid green;
+  transition: background-color var(--task-form-button-hover-duration)
+    ease-in-out;
 }
 
 .save-button:hover {
-    background-color: rgba(0, 128, 0, 1);
+  background-color: rgba(0, 128, 0, 1);
 }
 
 .cancel-button {
-    color: var(--highlight-color);
-    border: 2px solid var(--highlight-color);
-    transition: background-color var(--task-form-button-hover-duration) ease-in-out;
+  color: var(--highlight-color);
+  border: 2px solid var(--highlight-color);
+  transition: background-color var(--task-form-button-hover-duration)
+    ease-in-out;
 }
 
 .cancel-button:hover {
-    background-color: rgba(219, 76, 63, 1);
+  background-color: rgba(219, 76, 63, 1);
 }

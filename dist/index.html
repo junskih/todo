@@ -1,113 +1,145 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Not Todoist</title>
-        <link href='../src/styles.css' rel='stylesheet'></link>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    </head>
+  <head>
+    <title>Not Todoist</title>
+    <link href="../src/styles.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+  </head>
 
-    <body>
-        <div id='wrapper'>
-            <header>
-                <h1 class='page-title'>Not Todoist</h1>
-            </header>
+  <body>
+    <div id="wrapper">
+      <header>
+        <h1 class="page-title">Not Todoist</h1>
+      </header>
 
-            <nav>
-                <ul id='nav-list'>
-                    <li class='nav-group'>
-                        <div class='nav-header'>
-                            <i class='fas fa-chevron-right nav-chevron nav-chevron--rotate'></i> Projects
-                        </div>
-                        <ul id='project-list' class='nav-item-list'>
-                            <li class='nav-item'>
-                                <label id='add-project-text' class='label-toggle'><i class="fas fa-plus"></i> Add project</label>
-                                <input id='add-project-input' class='input-toggle' type='text' placeholder='Project name' required>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+      <nav>
+        <ul id="nav-list">
+          <li class="nav-group">
+            <div class="nav-header">
+              <i
+                class="fas fa-chevron-right nav-chevron nav-chevron--rotate"
+              ></i>
+              Projects
+            </div>
+            <ul id="project-list" class="nav-item-list">
+              <li class="nav-item">
+                <label id="add-project-text" class="label-toggle"
+                  ><i class="fas fa-plus"></i> Add project</label
+                >
+                <input
+                  id="add-project-input"
+                  class="input-toggle"
+                  type="text"
+                  placeholder="Project name"
+                  required
+                />
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-                <template id='nav-item-template'>
-                    <li class='nav-item nav-item--expanded'>
-                        <p class='nav-item-title'></p>
-                        <i class="far fa-trash-alt"></i>
-                    </li>
-                </template>
-            </nav>
+        <template id="nav-item-template">
+          <li class="nav-item nav-item--expanded">
+            <p class="nav-item-title"></p>
+            <i class="far fa-trash-alt"></i>
+          </li>
+        </template>
+      </nav>
 
-            <main id='project-view'>
-                <div class='project-header'>
-                    <p id='project-title' class='project-title' type='text' contenteditable='true'></p>
-                    <i class="fas fa-pen"></i>
-                </div>
-
-                <ul id='task-list'>
-                    <li class='add-task-item'>
-                        <label id='add-task-label' class='label-toggle'><i class="fas fa-plus"></i> Add task</label>
-                        <input id='add-task-input' class='input-toggle' type='text' placeholder='Task name' required>
-                    </li>
-                </ul>
-
-                <template id='task-template'>
-                    <li class='task'>
-                        <div class='task-header'>
-                            <input class='task-done' type='checkbox'>
-                            <h3 class='task-title'></h3>
-                        </div>
-                        <p class='task-desc'></p>
-                        <p class='task-date'></p>
-                        <i class="far fa-trash-alt"></i>
-                    </li>
-                </template>
-            </main>
+      <main id="project-view">
+        <div class="project-header">
+          <p
+            id="project-title"
+            class="project-title"
+            type="text"
+            contenteditable="true"
+          ></p>
+          <i class="fas fa-pen"></i>
         </div>
-        
-        <form class='task-form'>
-            <div>
-                <div class='task-form-group'>
-                    <input class='task-form-done' type='checkbox'>
-                    <h3 class='task-form-title' type='text' contenteditable='true'></h3>
-                    <i class='fas fa-pen'></i>
-                </div>
 
-                <h4>Description</h4>
-                <div class='task-form-group'>
-                    <p class='task-form-desc' type='text' contenteditable='true'></p>
-                    <i class='fas fa-pen'></i>
-                </div>
+        <ul id="task-list">
+          <li class="add-task-item">
+            <label id="add-task-label" class="label-toggle"
+              ><i class="fas fa-plus"></i> Add task</label
+            >
+            <input
+              id="add-task-input"
+              class="input-toggle"
+              type="text"
+              placeholder="Task name"
+              required
+            />
+          </li>
+        </ul>
 
-                <h4>Due</h4>
-                <div class='task-form-group'>
-                    <input class='task-form-date' type='date'>
-                </div>
-
-                <h4>Priority</h4>
-                <div class='task-form-group'>
-                    <ul class='task-form-priority-list'>
-                        <li class='task-form-priority-item'>
-                            <input id='priority-low' type='radio' name='priority'>
-                            <label for='priority-low'>Low</label>
-                        </li>
-                        
-                        <li class='task-form-priority-item'>
-                            <input id='priority-normal' type='radio' name='priority'>
-                            <label for='priority-normal'>Normal</label>
-                        </li>
-                        
-                        <li class='task-form-priority-item'>
-                            <input id='priority-high' type='radio' name='priority'>
-                            <label for='priority-high'>High</label>
-                        </li>
-                    </ul>
-                </div>
+        <template id="task-template">
+          <li class="task">
+            <div class="task-header">
+              <input class="task-done" type="checkbox" />
+              <h3 class="task-title"></h3>
             </div>
+            <p class="task-desc"></p>
+            <p class="task-date"></p>
+            <i class="far fa-trash-alt"></i>
+          </li>
+        </template>
+      </main>
+    </div>
 
-            <div class='task-form-button-container'>
-                <button class='task-form-button save-button'>Save</button>
-                <button class='task-form-button cancel-button'>Cancel</button>
-            </div>
-        </form>
-        <script src='main.js'></script>
-    </body>
+    <form class="task-form">
+      <div>
+        <div class="task-form-group">
+          <input class="task-form-done" type="checkbox" />
+          <h3 class="task-form-title" type="text" contenteditable="true"></h3>
+          <i class="fas fa-pen"></i>
+        </div>
+
+        <h4>Description</h4>
+        <div class="task-form-group">
+          <p class="task-form-desc" type="text" contenteditable="true"></p>
+          <i class="fas fa-pen"></i>
+        </div>
+
+        <h4>Due</h4>
+        <div class="task-form-group">
+          <input class="task-form-date" type="date" />
+        </div>
+
+        <h4>Priority</h4>
+        <div class="task-form-group">
+          <ul class="task-form-priority-list">
+            <li class="task-form-priority-item">
+              <input id="priority-low" type="radio" name="priority" />
+              <label for="priority-low">Low</label>
+            </li>
+
+            <li class="task-form-priority-item">
+              <input id="priority-normal" type="radio" name="priority" />
+              <label for="priority-normal">Normal</label>
+            </li>
+
+            <li class="task-form-priority-item">
+              <input id="priority-high" type="radio" name="priority" />
+              <label for="priority-high">High</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-form-button-container">
+        <button class="task-form-button save-button">Save</button>
+        <button class="task-form-button cancel-button">Cancel</button>
+      </div>
+    </form>
+    <script src="main.js"></script>
+  </body>
 </html>
