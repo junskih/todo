@@ -1,4 +1,5 @@
 # Ignore:
-build
 node_modules
-main.js
+build
+dist
+*.html
